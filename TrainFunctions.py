@@ -39,7 +39,7 @@ def updateDistributionsFromSentences(text, wordCasingLookup, uniDist, backwardBi
         if not checkSentenceSanity(sentence):
             continue
         
-        for tokenIdx in xrange(1, len(sentence)):
+        for tokenIdx in range(1, len(sentence)):
             word = sentence[tokenIdx]
             uniDist[word] += 1
                         
@@ -54,7 +54,7 @@ def updateDistributionsFromSentences(text, wordCasingLookup, uniDist, backwardBi
         if not checkSentenceSanity(sentence):
             continue
         
-        for tokenIdx in xrange(2, len(sentence)): #Start at 2 to skip first word in sentence
+        for tokenIdx in range(2, len(sentence)): #Start at 2 to skip first word in sentence
             word = sentence[tokenIdx]
             wordLower = word.lower()
             
@@ -72,7 +72,7 @@ def updateDistributionsFromSentences(text, wordCasingLookup, uniDist, backwardBi
         if not checkSentenceSanity(sentence):
             continue
         
-        for tokenIdx in xrange(2, len(sentence)-1): #Start at 2 to skip first word in sentence
+        for tokenIdx in range(2, len(sentence)-1): #Start at 2 to skip first word in sentence
             prevWord = sentence[tokenIdx-1]
             curWord = sentence[tokenIdx]
             curWordLower = word.lower()

@@ -5,11 +5,9 @@ import nltk
 import nltk.corpus
 from nltk.corpus import brown
 from nltk.corpus import reuters
-import cPickle
+import pickle
 import string
 import math
-import MySQLdb
-import MySQLdb.cursors
 import nltk.data
 
 from TrainFunctions import *
@@ -35,36 +33,35 @@ There are three options to train the true caser:
 The more training data, the better the results
 """
          
-
+'''
 # :: Option 1: Train it based on NLTK corpus ::
-print "Update from NLTK Corpus"
+print("Update from NLTK Corpus")
 NLTKCorpus = brown.sents()+reuters.sents()+nltk.corpus.semcor.sents()+nltk.corpus.conll2000.sents()+nltk.corpus.state_union.sents()
 updateDistributionsFromSentences(NLTKCorpus, wordCasingLookup, uniDist, backwardBiDist, forwardBiDist, trigramDist)
-
+'''
 # :: Option 2: Train it based the train.txt file ::
-""" #Uncomment, if you want to train from train.txt
-print "Update from train.txt file"
+ #Uncomment, if you want to train from train.txt
+print("Update from train.txt file")
 sentences = []
-for line in open('train.txt'):        
+for line in open('train.de.txt'):
     sentences.append(line.strip())
     
 tokens = [nltk.word_tokenize(sentence) for sentence in sentences]
 updateDistributionsFromSentences(tokens, wordCasingLookup, uniDist, backwardBiDist, forwardBiDist, trigramDist)
-"""     
+     
    
 # :: Option 3: Train it based ngrams tables from http://www.ngrams.info/download_coca.asp ::    
 """ #Uncomment, if you want to train from train.txt
-print "Update Bigrams / Trigrams"
+print("Update Bigrams / Trigrams")
 updateDistributionsFromNgrams('ngrams/w2.txt', 'ngrams/w3.txt', wordCasingLookup, uniDist, backwardBiDist, forwardBiDist, trigramDist)
 """
 
-f = open('distributions.obj', 'wb')
-cPickle.dump(uniDist, f, protocol=cPickle.HIGHEST_PROTOCOL)
-cPickle.dump(backwardBiDist, f, protocol=cPickle.HIGHEST_PROTOCOL)
-cPickle.dump(forwardBiDist, f, protocol=cPickle.HIGHEST_PROTOCOL)
-cPickle.dump(trigramDist, f, protocol=cPickle.HIGHEST_PROTOCOL)
-cPickle.dump(wordCasingLookup, f, protocol=cPickle.HIGHEST_PROTOCOL)
-f.close()
+with open('distributions.obj', 'wb') as f:
+    pickle.dump(uniDist, f, protocol=2)
+    pickle.dump(backwardBiDist, f, protocol=2)
+    pickle.dump(forwardBiDist, f, protocol=2)
+    pickle.dump(trigramDist, f, protocol=2)
+    pickle.dump(wordCasingLookup, f, protocol=2)
 
 
         

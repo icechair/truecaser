@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+import sys
+import os
+import nltk
+import pickle
+from Truecaser import *
+
+
+
+if __name__ == "__main__":
+    _, *sentence = sys.argv
+    #print('ArgumentList: ', str(sent))
+    #print(" ".join(sentence))
+    tokens = nltk.word_tokenize(" ".join(sentence))
+    with open(os.path.dirname(__file__) + '/distributions.obj', 'rb') as f:
+        uniDist = pickle.load(f)
+        backwardBiDist = pickle.load(f)
+        forwardBiDist = pickle.load(f)
+        trigramDist = pickle.load(f)
+        wordCasingLookup = pickle.load(f)    
+        tokensTrueCase = getTrueCase(tokens, 'title', wordCasingLookup, uniDist, backwardBiDist, forwardBiDist, trigramDist)
+        print(" ".join(tokensTrueCase))
